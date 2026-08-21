@@ -1,0 +1,18 @@
+# Intel — Viral Growth Media
+> Field notes on AI business infrastructure and the scroll, written by Laura
+> Egocheaga, the operator running an autonomous revenue system: AI agents that
+> answer DMs in 90 seconds around the clock, watch ad spend hourly, recover
+> abandoned carts, and report to one human.
+
+Two topic clusters:
+- AI business infrastructure: how a real business runs on AI agents — DM
+  automation, ad monitoring, revenue recovery, alerting. First-hand, from
+  production systems, with real numbers.
+- The scroll: destiny, pattern, and the scroll scan.
+
+Author: Laura Egocheaga (founder, Viral Growth Media)
+Main site: https://viralgrowthmedia.ai
+Contact: scrollsupport@viralgrowthmedia.ai
+
+## Posts
+See https://intel.viralgrowthmedia.ai/sitemap-index.xml and /rss.xml

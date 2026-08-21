@@ -1,0 +1,18 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+const posts = (await getCollection('blog')).sort((a, b) => b.data.pubDate - a.data.pubDate);
+---
+<Base title="Intel — Viral Growth Media" description="Field notes on AI business infrastructure and the scroll, from the operator running both.">
+  <h1>Intel</h1>
+  <p class="meta">Field notes from an autonomous business: AI infrastructure that runs revenue, and the scroll behind it.</p>
+  <ul style="list-style:none;padding:0">
+    {posts.map((p) => (
+      <li style="margin:1.5rem 0">
+        <a href={`/blog/${p.id.replace(/\.md$/, '')}`} style="font-size:1.15rem;font-weight:600">{p.data.title}</a>
+        <div class="meta">{p.data.pubDate.toISOString().slice(0, 10)} · {p.data.cluster}</div>
+        <div>{p.data.description}</div>
+      </li>
+    ))}
+  </ul>
+</Base>

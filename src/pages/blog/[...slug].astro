@@ -1,0 +1,40 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: post.id.replace(/\.md$/, '') },
+    props: { post },
+  }));
+}
+const { post } = Astro.props;
+const { Content } = await render(post);
+const d = post.data;
+const cta = d.cta === 'operator'
+  ? { text: 'Want this level of automation running your business? See how we install it.',
+      href: 'https://viralgrowthmedia.ai/qj' }
+  : { text: 'The scroll scan maps the pattern you keep living. Start there.',
+      href: 'https://viralgrowthmedia.ai/quantum-destiny-blueprint?src=intel-blog' };
+---
+<Base title={d.title} description={d.description}
+      article={{ pubDate: d.pubDate.toISOString(), updatedDate: d.updatedDate?.toISOString() }}
+      faqs={d.faqs}>
+  <article>
+    <h1>{d.title}</h1>
+    <p class="meta">
+      {d.pubDate.toISOString().slice(0, 10)}
+      {d.updatedDate && ` · updated ${d.updatedDate.toISOString().slice(0, 10)}`}
+      · Laura Egocheaga
+    </p>
+    <Content />
+    {d.faqs?.length > 0 && (
+      <section>
+        <h2>Frequently asked questions</h2>
+        {d.faqs.map((f) => (<><h3>{f.q}</h3><p>{f.a}</p></>))}
+      </section>
+    )}
+    <div class="cta"><a href={cta.href}>{cta.text}</a></div>
+  </article>
+</Base>

@@ -1,0 +1,76 @@
+---
+const { title, description, article, faqs } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site).href.replace(/\/$/, '') || Astro.site;
+const org = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Viral Growth Media",
+  url: "https://viralgrowthmedia.ai",
+  founder: { "@type": "Person", name: "Laura Egocheaga" },
+};
+const articleLd = article ? {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  headline: title,
+  description,
+  datePublished: article.pubDate,
+  ...(article.updatedDate ? { dateModified: article.updatedDate } : {}),
+  author: { "@type": "Person", name: "Laura Egocheaga", url: "https://viralgrowthmedia.ai" },
+  publisher: org,
+  mainEntityOfPage: canonical,
+} : null;
+const faqLd = faqs?.length ? {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((f) => ({
+    "@type": "Question", name: f.q,
+    acceptedAnswer: { "@type": "Answer", text: f.a },
+  })),
+} : null;
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonical} />
+  <link rel="alternate" type="application/rss+xml" title="Intel — Viral Growth Media" href="/rss.xml" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:type" content={article ? 'article' : 'website'} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:site_name" content="Intel by Viral Growth Media" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <script type="application/ld+json" set:html={JSON.stringify(org)} />
+  {articleLd && <script type="application/ld+json" set:html={JSON.stringify(articleLd)} />}
+  {faqLd && <script type="application/ld+json" set:html={JSON.stringify(faqLd)} />}
+  <style>
+    :root { --ink: #14121f; --muted: #5b5870; --accent: #4630d9; --bg: #fbfaf7; }
+    @media (prefers-color-scheme: dark) {
+      :root { --ink: #ece9f4; --muted: #a29fb8; --accent: #a595ff; --bg: #14121f; }
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font: 17px/1.7 -apple-system, "Segoe UI", Roboto, sans-serif;
+           color: var(--ink); background: var(--bg); }
+    main { max-width: 720px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+    a { color: var(--accent); }
+    h1 { font-size: 2rem; line-height: 1.25; margin: 1rem 0; }
+    h2 { font-size: 1.4rem; margin-top: 2.2rem; }
+    header.site { padding: 1rem 1.25rem; border-bottom: 1px solid color-mix(in srgb, var(--muted) 25%, transparent); }
+    header.site a { text-decoration: none; color: var(--ink); font-weight: 600; }
+    header.site span { color: var(--accent); }
+    .meta { color: var(--muted); font-size: 0.9rem; }
+    .cta { margin: 2.5rem 0 0; padding: 1.25rem; border: 1px solid var(--accent);
+           border-radius: 10px; }
+    img { max-width: 100%; }
+    footer { color: var(--muted); font-size: .85rem; max-width: 720px; margin: 0 auto; padding: 2rem 1.25rem; }
+  </style>
+</head>
+<body>
+  <header class="site"><a href="/">intel<span>.</span>viralgrowthmedia</a></header>
+  <main><slot /></main>
+  <footer>© Viral Growth Media. Written and operated by Laura Egocheaga.</footer>
+</body>
+</html>
