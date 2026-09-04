@@ -1,6 +1,7 @@
 ---
 const { title, description, article, faqs } = Astro.props;
-const canonical = new URL(Astro.url.pathname, Astro.site).href.replace(/\/$/, '') || Astro.site;
+const canonicalPath = Astro.url.pathname.replace(/\.html$/, '');
+const canonical = new URL(canonicalPath, Astro.site).href.replace(/\/$/, '') || Astro.site;
 const org = {
   "@context": "https://schema.org",
   "@type": "Organization",

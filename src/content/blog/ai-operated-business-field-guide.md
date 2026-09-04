@@ -2,12 +2,13 @@
 title: "The AI-Operated Business: A Field Guide From Someone Actually Running One"
 description: "How to run a business on AI agents, from an operator with a live system: what to automate, what breaks, what stays human, with real numbers."
 pubDate: 2026-08-22
+updatedDate: 2026-09-04
 cluster: ai-infrastructure
 tags: ["ai agents", "business automation", "ai infrastructure", "autonomous business"]
 cta: operator
 faqs:
   - q: "Can you actually run a business on AI agents?"
-    a: "Yes, with a hard boundary. AI agents can own volume work like first response to customer messages, monitoring, and follow-up sequences. Judgment work like closing sales, spend decisions, and handling upset customers stays human. In my operation, agents answer every Instagram DM in under 4 minutes at any hour, and the morning I audited my escalation queue, only 9 of 42 open threads actually needed a person."
+    a: "Yes, with a hard boundary. Agents can own volume work like eligible first responses, monitoring, and follow-up sequences. Judgment work needs explicit escalation rules, and every critical automation needs independent verification."
   - q: "What should a business automate with AI first?"
     a: "First response to inbound messages. It's high volume, it's time-sensitive, most of it is repetitive, and the cost of a slow answer is a lost sale. It's also the easiest place to draw a clean line between what the machine handles and what escalates to a human."
   - q: "How do you know when an AI automation breaks?"
@@ -16,7 +17,7 @@ faqs:
     a: "They replace the overnight gap and the grind, not the judgment. I run with two part-time human closers instead of a support team. The agents made my humans more valuable, because the only work reaching them is work that needs a human."
 ---
 
-Last night my business answered 55 customer messages while I slept. Median response time under four minutes. Nobody was awake.
+My business handles eligible customer messages, monitoring, and recovery work while I sleep. That is useful only because the system also knows when to stop and escalate.
 
 That's not a pitch. That's my Thursday, pulled from the log this morning.
 
@@ -28,7 +29,7 @@ This is the field guide I wanted. What to automate, what breaks, what it costs, 
 
 Mine looks like this. One operator (me), two part-time human closers, and agents running at every hour:
 
-- **A first responder** that answers every Instagram DM in 60 seconds to 4 minutes. Simple asks get deterministic answers. Real questions get a reply composed in my voice under strict rules. Objections, complaints, anything emotional: straight to a human.
+- **A first responder** that handles eligible Instagram messages under strict rules. Simple asks get deterministic answers. Real questions can get a bounded reply composed in my voice. Objections, complaints, and anything emotional are escalated.
 - **An ads watcher** that reads my ad account hourly and judges spend against settled cash from my payment processor. Not against the ad platform's attribution, which flatters itself. Cash.
 - **A recovery layer** that runs a four-touch sequence on abandoned checkouts and finds buyers who asked for a link and never got one.
 - **An escalation system** that opens each closer's shift with one prioritized list: paying customers with problems first, people ready to buy second, everything else after.
@@ -87,7 +88,7 @@ Budget for that ratio. Build only the worker and you've built a liability with g
 
 ## What does it cost to run?
 
-Less than one employee. The whole fleet runs on modest dedicated hardware I already owned, and API costs land in the low hundreds per month. That covers 24/7 first response, hourly ad monitoring, recovery sequences, and all the watchers.
+The cost depends on hardware, model routing, message volume, and how much verification you build. I run much of the routine work on dedicated hardware with local models, but the larger cost is engineering time, especially the guardrails, monitors, and recovery paths.
 
 The real cost is engineering time, and most of it goes into guardrails, not features. The responder took a day to build. Making it safe took longer: send caps, per-thread limits, jittered delays so it behaves like a person instead of a spam cannon, escalation rules, and the monitors that catch it misbehaving. A working demo of an AI agent takes an afternoon. A trustworthy one takes discipline.
 
@@ -105,7 +106,7 @@ That's the honest version of "AI replaces jobs." It replaced the part of the job
 
 ## How do you keep an AI agent from getting your accounts banned?
 
-Behave like a person, structurally. My responder only replies to people who messaged first. It never sends outside [Meta's messaging window policy](https://developers.facebook.com/docs/messenger-platform/policy/policy-overview). It waits a jittered 75 seconds to just over four minutes so replies don't land with robotic timing. It caps sends per run, per hour, and per thread per day. It rotates phrasing so no two people get the same sentence.
+Start with authorization and eligibility, not imitation. My responder works from inbound activity, checks the current messaging route, limits repeated automated replies in a thread, and stops when a person needs to take ownership. Meta's current platform documentation and the API response are the policy source of truth. A delay can improve the experience, but it is not a permission slip.
 
 None of it is clever. It's just deliberate. Platforms don't publish the line where automation becomes spam, so I keep my system far enough from any reasonable guess that I never find out where that line is.
 
