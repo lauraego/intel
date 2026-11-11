@@ -1,0 +1,9 @@
+---
+const { date, minutes } = Astro.props;
+const d = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+---
+<div class="byline"><div class="avatar" role="img" aria-label="Laura Egocheaga"></div><div><b>Laura Egocheaga</b><br>Founder, Viral Growth Media · <time datetime={date.toISOString().slice(0, 10)}>{d}</time> · {minutes} min read</div></div>
+<style>
+  .byline{display:flex;align-items:center;gap:12px;padding:18px 0 4px;font-size:15px;color:var(--ink2);line-height:1.35}
+  .byline b{color:var(--ink);font-weight:700}
+</style>

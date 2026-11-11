@@ -1,0 +1,22 @@
+---
+// Picture header: generated 1600x900 art, title in a dark translucent box (Laura approved 2026-11-11)
+const { title, titleEm, kicker, minutes, image, alt } = Astro.props;
+let before = title, em = '', after = '';
+if (titleEm && title.includes(titleEm)) { const i = title.indexOf(titleEm); before = title.slice(0, i); em = titleEm; after = title.slice(i + titleEm.length); }
+---
+<section class="hero">
+  <img class="hero-art" src={image} alt={alt} width="1600" height="900" fetchpriority="high" decoding="async" />
+  <div class="hero-inner"><div class="box">
+    <p class="eyebrow">{kicker ? `${kicker} · ` : ''}{minutes} min read</p>
+    <h1>{before}{em && <em>{em}</em>}{after}</h1>
+  </div></div>
+</section>
+<style>
+  .hero{position:relative;background:#000;color:#fff;overflow:hidden}
+  .hero-art{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:70% 50%}
+  .hero-inner{position:relative;z-index:2;max-width:1100px;margin:0 auto;padding:64px 16px 22px;min-height:300px;display:flex;flex-direction:column;justify-content:flex-end}
+  .box{background:rgba(0,0,0,.62);border:1px solid rgba(212,175,55,.35);padding:20px 20px 18px;max-width:760px;backdrop-filter:blur(2px)}
+  h1{font:700 26px/1.16 'Cinzel',serif;margin:0;letter-spacing:.01em;color:#fff}
+  h1 em{font-style:normal;color:var(--gold2)}
+  @media (min-width:900px){ .hero-inner{min-height:520px;padding:80px 40px 56px} .box{padding:34px 36px} h1{font-size:50px} }
+</style>

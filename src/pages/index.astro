@@ -3,16 +3,26 @@ import Base from '../layouts/Base.astro';
 import { getCollection } from 'astro:content';
 const posts = (await getCollection('blog')).sort((a, b) => b.data.pubDate - a.data.pubDate);
 ---
-<Base title="Intel — Viral Growth Media" description="Field notes on AI business infrastructure and the scroll, from the operator running both.">
-  <h1>Intel</h1>
-  <p class="meta">Field notes from an autonomous business: AI infrastructure that runs revenue, and the scroll behind it.</p>
-  <ul style="list-style:none;padding:0">
-    {posts.map((p) => (
-      <li style="margin:1.5rem 0">
-        <a href={`/blog/${p.id.replace(/\.md$/, '')}`} style="font-size:1.15rem;font-weight:600">{p.data.title}</a>
-        <div class="meta">{p.data.pubDate.toISOString().slice(0, 10)} · {p.data.cluster}</div>
-        <div>{p.data.description}</div>
-      </li>
-    ))}
-  </ul>
+<Base title="Intel — Viral Growth Media" description="Field notes on the Scroll: the patterns you keep living, where they started, and how to see them clearly." image={posts[0]?.data.heroImage} imageAlt={posts[0]?.data.heroAlt}>
+  <main class="wrap home">
+    <p class="eyebrow">Intel by Viral Growth Media</p>
+    <h1>Field notes on the Scroll</h1>
+    <div class="cards">
+      {posts.map((p) => (
+        <a class="card" href={`/blog/${p.id}`}>
+          <img src={p.data.heroImage} alt="" width="1600" height="900" loading="lazy" decoding="async" />
+          <div class="c"><div class="t">{p.data.title}</div><div class="d">{p.data.hook}</div></div>
+        </a>
+      ))}
+    </div>
+  </main>
+  <style>
+    .home{padding-top:34px;padding-bottom:60px}
+    .home .eyebrow{color:#7a5c00}
+    h1{font:700 32px/1.2 'Cinzel',serif;margin:0 0 24px}
+    .cards{display:grid;gap:22px}
+    .card{display:block;background:#fff;border:1px solid var(--line);border-radius:8px;overflow:hidden;text-decoration:none;color:var(--ink)}
+    .card img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;background:#000}
+    .c{padding:14px 16px 16px} .t{font-weight:700;font-size:19px;line-height:1.3} .d{font-size:15px;color:var(--ink2);margin-top:4px}
+  </style>
 </Base>

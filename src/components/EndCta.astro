@@ -1,0 +1,38 @@
+---
+// End section: the article's own closing section, then price, button, proof and author box.
+const { html } = Astro.props;
+---
+<section id="end-cta"><div class="wrap">
+  <p class="eyebrow">Start here</p>
+  <Fragment set:html={html} />
+  <div class="price"><b>$55</b><span>one time</span></div>
+  <a class="btn gold" href="https://viralgrowthmedia.ai/">Decode your Scroll <span aria-hidden="true">&rarr;</span></a>
+  <div class="trust">
+    <div><b>7-day read guarantee</b>If it does not name a pattern you recognize as yours, the $55 comes back.</div>
+    <div><b>Delivery</b>Inbox in 30 minutes or less.</div>
+    <div><b>&#9733;&#9733;&#9733;&#9733;&#9733;</b>Verified Whop reviews.</div>
+  </div>
+  <p class="quote">&ldquo;My hands were literally shaking. It was that specific.&rdquo;<cite>Alyssa M. · verified Whop review</cite></p>
+  <div class="author"><div class="avatar" role="img" aria-label="Laura Egocheaga"></div><p><b>Laura Egocheaga</b><br>Founder of Viral Growth Media. She reads every Scroll pattern this site writes about.</p></div>
+</div></section>
+<style is:global>
+  #end-cta{background:#000;color:#f5f0e8;margin-top:48px;padding:44px 0 40px}
+  #end-cta h2{color:#fff;border:0;margin-top:0;padding-top:0;font-size:26px}
+  #end-cta p{color:#d0c9b8;margin:0 0 16px}
+  #end-cta p.eyebrow{color:var(--gold2);margin-bottom:10px}
+  #end-cta a{color:var(--gold2)}
+  #end-cta a.btn{color:#000}
+  #end-cta .price{display:flex;align-items:baseline;gap:10px;margin:18px 0 10px}
+  #end-cta .price b{font:700 40px/1 'Cinzel',serif;color:var(--gold2)}
+  #end-cta .price span{font-size:15px;color:#b9b2a0}
+  #end-cta .trust{display:grid;gap:10px;margin:22px 0 0}
+  #end-cta .trust div{border:1px solid rgba(212,175,55,.3);border-radius:6px;padding:12px 14px;font-size:15px;line-height:1.45;color:#e8e1cf}
+  #end-cta .trust b{color:var(--gold2);display:block;font-size:11px;letter-spacing:.18em;text-transform:uppercase;margin-bottom:4px}
+  #end-cta .quote{font:500 22px/1.35 'Cormorant Garamond',serif;font-style:italic;color:#fff;margin:22px 0 0;padding-left:14px;border-left:2px solid var(--gold)}
+  #end-cta .quote cite{display:block;font:500 13px/1.4 'DM Sans';font-style:normal;color:#b9b2a0;margin-top:6px}
+  #end-cta .author{display:flex;gap:14px;align-items:center;margin-top:26px;padding-top:20px;border-top:1px solid rgba(212,175,55,.25)}
+  #end-cta .author .avatar{width:64px;height:64px}
+  #end-cta .author p{margin:0;font-size:15px;line-height:1.45}
+  #end-cta .author b{color:#fff}
+  @media (min-width:900px){ #end-cta .btn{display:inline-flex;min-width:340px} #end-cta .trust{grid-template-columns:1fr 1fr 1fr} }
+</style>

@@ -1,40 +1,68 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { getCollection, render } from 'astro:content';
+import Hero from '../../components/Hero.astro';
+import Byline from '../../components/Byline.astro';
+import AnswerCard from '../../components/AnswerCard.astro';
+import MidCta from '../../components/MidCta.astro';
+import EndCta from '../../components/EndCta.astro';
+import FaqAccordion from '../../components/FaqAccordion.astro';
+import Related from '../../components/Related.astro';
+import StickyCta from '../../components/StickyCta.astro';
+import { getCollection } from 'astro:content';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
   return posts.map((post) => ({
     params: { slug: post.id.replace(/\.md$/, '') },
-    props: { post },
+    props: { post, all: posts },
   }));
 }
-const { post } = Astro.props;
-const { Content } = await render(post);
+const { post, all } = Astro.props;
 const d = post.data;
-const cta = d.cta === 'operator'
-  ? { text: 'Find where your revenue system is leaking in 60 seconds.',
-      href: 'https://book.viralgrowthmedia.io/revenue-recovery-report?utm_source=intel-blog&utm_medium=blog&utm_campaign=revenue-recovery-audit' }
-  : { text: 'The scroll scan maps the pattern you keep living. Start there.',
-      href: 'https://viralgrowthmedia.ai/quantum-destiny-blueprint?src=intel-blog' };
+// The markdown body carries two markers: where the mid CTA card goes, and where the closing section
+// (which moves into the end CTA block) starts. Text between them is rendered exactly as written.
+const html = post.rendered?.html ?? '';
+const MID = /<div class="mid-cta-slot"><\/div>/;
+const END = /<div class="end-cta-slot"><\/div>/;
+const [beforeEnd, endHtml = ''] = html.split(END);
+const [bodyA, bodyB = ''] = beforeEnd.split(MID);
+const words = (d.answer.join(' ') + ' ' + html.replace(/<[^>]+>/g, ' ')).split(/\s+/).filter(Boolean).length;
+const minutes = Math.max(1, Math.round(words / 230));
+const related = all.filter((p) => p.id !== post.id && p.data.cluster === d.cluster)
+  .sort((a, b) => b.data.pubDate - a.data.pubDate).slice(0, 3);
 ---
 <Base title={d.title} description={d.description}
       article={{ pubDate: d.pubDate.toISOString(), updatedDate: d.updatedDate?.toISOString() }}
-      faqs={d.faqs}>
-  <article>
-    <h1>{d.title}</h1>
-    <p class="meta">
-      {d.pubDate.toISOString().slice(0, 10)}
-      {d.updatedDate && ` · updated ${d.updatedDate.toISOString().slice(0, 10)}`}
-      · Laura Egocheaga
-    </p>
-    <Content />
-    {d.faqs?.length > 0 && (
-      <section>
-        <h2>Frequently asked questions</h2>
-        {d.faqs.map((f) => (<><h3>{f.q}</h3><p>{f.a}</p></>))}
-      </section>
-    )}
-    <div class="cta"><a href={cta.href}>{cta.text}</a></div>
-  </article>
+      faqs={d.faqs} image={d.heroImage} imageAlt={d.heroAlt}>
+  <div class="progress"></div>
+  <Hero title={d.title} titleEm={d.titleEm} kicker={d.kicker} minutes={minutes} image={d.heroImage} alt={d.heroAlt} />
+  <main class="wrap">
+    <Byline date={d.pubDate} minutes={minutes} />
+    <AnswerCard hook={d.hook} forWho={d.forWho} answer={d.answer} />
+    <article class="body">
+      <Fragment set:html={bodyA} />
+      {bodyB && <MidCta />}
+      <Fragment set:html={bodyB} />
+    </article>
+  </main>
+  {endHtml && <EndCta html={endHtml} />}
+  <FaqAccordion faqs={d.faqs} />
+  <Related posts={related} />
+  <StickyCta />
 </Base>
+<style is:global>
+  article.body p{margin:0 0 18px}
+  article.body ul,article.body ol{padding-left:1.2em;margin:0 0 18px}
+  .pull{margin:34px -4px;padding:0;border:0;text-align:center}
+  .pull p{font:500 30px/1.2 'Cormorant Garamond',serif;font-style:italic;margin:0!important;color:var(--ink)}
+  .pull::before,.pull::after{content:"";display:block;width:60px;height:2px;background:var(--gold);margin:0 auto 16px}
+  .pull::after{margin:16px auto 0}
+  .callout{background:#14110b;color:#f5f0e8;border-radius:6px;padding:16px 18px;margin:24px 0}
+  .callout-k{font:700 11px/1 'DM Sans';letter-spacing:.2em;text-transform:uppercase;color:var(--gold2)}
+  .callout p{margin:8px 0 0!important;font-size:20px;line-height:1.45}
+  .coords{margin:22px 0 26px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .coords div{background:#000;color:#f5f0e8;border:1px solid rgba(212,175,55,.4);border-radius:6px;padding:14px 12px;font-size:16px;line-height:1.3}
+  .coords .n{display:block;font:700 13px/1 'Cinzel',serif;color:var(--gold);margin-bottom:6px}
+  .coords figcaption{grid-column:1/-1;font-size:14px;color:var(--ink2);text-align:center}
+  @media (min-width:900px){ .pull{margin:44px -60px} .pull p{font-size:40px} .coords{grid-template-columns:repeat(4,1fr)} }
+</style>

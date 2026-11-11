@@ -1,0 +1,18 @@
+---
+// Visible FAQ as an accordion. The FAQPage JSON-LD is emitted by Base.astro from the same faqs list.
+const { faqs } = Astro.props;
+---
+{faqs?.length > 0 && (
+<section class="wrap faq"><h2>Questions people ask</h2>
+  {faqs.map((f) => (<details><summary>{f.q}</summary><p>{f.a}</p></details>))}
+</section>)}
+<style>
+  .faq{padding:40px 0 10px}
+  .faq h2{border:0;margin-top:0}
+  details{border-bottom:1px solid var(--line)} details:first-of-type{border-top:1px solid var(--line)}
+  summary{cursor:pointer;list-style:none;padding:16px 34px 16px 0;font-weight:700;font-size:18px;line-height:1.4;position:relative;min-height:48px}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"+";position:absolute;right:4px;top:12px;font:400 26px/1 'DM Sans';color:#7a5c00}
+  details[open] summary::after{content:"–"}
+  details p{margin:0 0 16px;font-size:17px;color:var(--ink2)}
+</style>

@@ -1,0 +1,20 @@
+---
+const { posts } = Astro.props;
+---
+{posts.length > 0 && (
+<section class="wrap related"><h3>Read next</h3><div class="rels">
+  {posts.map((p) => (
+    <a class="rel" href={`/blog/${p.id}`}>
+      <img class="rel-img" src={p.data.heroImage} alt="" width="160" height="90" loading="lazy" decoding="async" />
+      <div class="rel-t">{p.data.title}</div><div class="rel-d">{p.data.hook}</div>
+    </a>))}
+</div></section>)}
+<style>
+  .related{padding:20px 0 120px}
+  h3{font:700 14px/1 'DM Sans';letter-spacing:.2em;text-transform:uppercase;color:var(--ink2);margin:0 0 14px}
+  .rels{display:grid;gap:14px}
+  .rel{display:grid;grid-template-columns:96px 1fr;grid-template-rows:auto auto;column-gap:14px;text-decoration:none;color:var(--ink);align-items:start}
+  .rel-img{grid-row:1/3;width:96px;height:72px;object-fit:cover;border-radius:6px;background:#000}
+  .rel-t{font-weight:700;font-size:17px;line-height:1.3} .rel-d{font-size:14px;color:var(--ink2)}
+  @media (min-width:900px){ .rels{grid-template-columns:1fr 1fr} .related{padding-bottom:60px} }
+</style>

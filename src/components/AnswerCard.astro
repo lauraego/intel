@@ -1,0 +1,13 @@
+---
+const { hook, forWho, answer } = Astro.props;
+---
+<p class="hook">{hook}</p>
+<p class="forwho">{forWho}</p>
+<div class="answer"><div class="k">The short answer</div>{answer.map((p) => <p>{p}</p>)}</div>
+<style>
+  .hook{font:500 24px/1.35 'Cormorant Garamond',serif;font-style:italic;margin:18px 0 8px;color:var(--ink)}
+  .forwho{font-size:16px;line-height:1.5;color:var(--ink2);border-left:3px solid var(--gold);padding:2px 0 2px 12px;margin:0 0 22px}
+  .answer{background:#fff;border:1px solid var(--line);border-top:4px solid var(--gold);border-radius:6px;padding:18px 18px 6px;margin:8px 0 26px;box-shadow:0 8px 24px rgba(0,0,0,.05)}
+  .k{font:700 11px/1 'DM Sans';letter-spacing:.2em;text-transform:uppercase;color:#7a5c00;margin-bottom:10px}
+  .answer p{margin:0 0 12px;font-size:19px}
+</style>
