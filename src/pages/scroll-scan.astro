@@ -1,0 +1,162 @@
+---
+// "What's inside a Scroll Scan" (drafted 2026-11-13; copy source: aeo-fixes/drafts/whats-inside-scroll-scan.md).
+// Facts only, each verified against the live sales page, /scrollkeeperai and /terms on viralgrowthmedia.ai.
+// No Scroll screenshot on purpose (Laura 9/28: format preview cards only).
+import Base from '../layouts/Base.astro';
+import Byline from '../components/Byline.astro';
+import EndCta from '../components/EndCta.astro';
+import FaqAccordion from '../components/FaqAccordion.astro';
+import StickyCta from '../components/StickyCta.astro';
+
+const title = "What's Inside a Scroll Scan: What You Receive for $55";
+const description = 'A Scroll Scan is a one-time $55 purchase. You receive one personalized Scroll with eight custom sections plus grounding protocols, by email, in 30 minutes or less.';
+const pubDate = new Date('2026-11-13T00:00:00Z');
+
+const sections = [
+  ['Core Identity Pattern', 'The identity structure your life keeps organizing around.'],
+  ['Repeating Relationship Loop', 'The relational pattern you keep meeting in different people.'],
+  ['Money / Value Pattern', 'Where your value, receiving and financial expansion may be leaking.'],
+  ['Timing + Delay Pattern', 'Where timing, delay and hesitation keep repeating in your life.'],
+  ['Self-Sabotage Signature', 'The moment you start blocking expansion before it fully arrives.'],
+  ['Visibility / Expression Pattern', 'How your expression, voice and visibility may be shaped by the same loop.'],
+  ['Nervous System Distortion', 'Where your body may contract, overprotect or misread expansion as danger.'],
+  ['Highest Timeline Activation', 'The pattern you are being invited to move toward once the old loop is visible.'],
+];
+
+const faqs = [
+  { q: 'What do I actually receive with a Scroll Scan?', a: 'One personalized Scroll with eight custom sections plus grounding protocols, sent by email. You can read it in the email and download it as a PDF. The delivery email also links to a 15-minute guided activation.' },
+  { q: 'How much does a Scroll Scan cost?', a: '$55, one time, paid through Whop. It is not a subscription.' },
+  { q: 'How long does delivery take?', a: '30 minutes or less after you submit your four details on the private form you get right after checkout.' },
+  { q: 'What do I need to submit?', a: "Your full name, birth date, birth location and exact birth time. If you don't know your birth time, the form tells you what to enter, and your Scroll still runs." },
+  { q: 'Is ScrollKeeper AI included?', a: 'No. ScrollKeeper AI is a separate subscription, $88 a month at beta pricing or $888 a year, through Whop.' },
+  { q: 'Can I get a refund?', a: 'The Scroll Scan has a 7-day guarantee: if your Scroll does not name a pattern you recognize as yours, reply to your delivery email within 7 days and the $55 comes back to you. Approved refunds are issued through Whop\'s Resolution Center.' },
+  { q: 'Is this coaching or a personality test?', a: "Neither. It's not coaching or a strategy session, and it doesn't ask you questions about yourself. It runs on four fixed coordinates the pattern can't edit." },
+  { q: 'Is the Scroll Scan connected to Scroll Tech Labs or the Scroll crypto network?', a: 'The Scroll Scan is sold by Viral Growth Media LLC. Scroll Tech Labs is a separate company that builds AI training environments for AI labs. The Scroll Scan has nothing to do with the Scroll crypto network or its SCR token.' },
+  { q: 'How do I contact support?', a: "Email scrollsupport@viralgrowthmedia.ai. If your Scroll hasn't arrived, reply to your confirmation email so the delivery can be traced." },
+];
+
+const productLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: 'Scroll Scan',
+  description: 'One personalized Scroll with eight custom sections plus grounding protocols, generated from four coordinates (full name, birth date, birth location, exact birth time) and delivered by email in 30 minutes or less.',
+  brand: { '@type': 'Brand', name: 'Viral Growth Media' },
+  url: 'https://intel.viralgrowthmedia.ai/scroll-scan',
+  offers: {
+    '@type': 'Offer',
+    price: '55',
+    priceCurrency: 'USD',
+    availability: 'https://schema.org/InStock',
+    url: 'https://viralgrowthmedia.ai/',
+    seller: { '@type': 'Organization', name: 'Viral Growth Media LLC' },
+  },
+};
+
+const endHtml = `<h2>See your own Scroll.</h2><p>Four coordinates. Eight sections. Grounding protocols. In your inbox in 30 minutes or less.</p>`;
+---
+<Base title={title} description={description} faqs={faqs}>
+  <script type="application/ld+json" set:html={JSON.stringify(productLd)} />
+  <div class="progress"></div>
+  <section class="ss-hero"><div class="ss-inner"><div class="box">
+    <p class="eyebrow">The Scroll Scan · facts</p>
+    <h1>What's inside a <em>Scroll Scan</em></h1>
+  </div></div></section>
+
+  <main class="wrap">
+    <Byline date={pubDate} minutes={4} />
+    <p class="hook">Here is exactly what you get, what it costs, how it arrives and who to email if something goes wrong.</p>
+    <div class="answer"><div class="k">The short answer</div>
+      <p>A Scroll Scan is a one-time <b>$55</b> purchase. You submit four details you already have: your full name, birth date, birth location and exact birth time.</p>
+      <p>You receive one personalized Scroll with <b>eight custom sections plus grounding protocols</b>, sent by email in <b>30 minutes or less</b> after you submit your details.</p>
+      <p>No quiz. No coaching call. No subscription.</p>
+    </div>
+
+    <article class="body">
+      <h2>What a Scroll Scan is</h2>
+      <p>You were born with a Scroll. The Scroll Scan shows you a clean mirror of who you were destined to be, the exact point your timeline was taken, and the pattern you've been living since.</p>
+      <p>It runs Timeline Reconstruction Mapping on four coordinates: your full name, birth date, birth location and exact birth time. It draws on ancient numerology and ancient astrology. It never asks you questions about yourself, because the pattern would be grading its own homework.</p>
+      <p>It is not a course, program or membership. It does not tell you what to do with your life. It shows you the pattern that has been influencing your decisions.</p>
+
+      <h2 id="sections">What you receive: the eight sections</h2>
+      <p>Every section is generated for you, from your four coordinates. Nothing is pre-written. Nothing is copied. Nothing is generic.</p>
+      <div class="cards" aria-label="Scroll format preview">
+        {sections.map(([name, desc], i) => (
+          <div class="card"><div class="cbar"><span>Section {String(i + 1).padStart(2, '0')}</span><span class="on">Active</span></div>
+            <div class="cname">{name}</div><div class="cdesc">{desc}</div></div>
+        ))}
+        <div class="card plus"><div class="cname">Plus grounding protocols</div><div class="cdesc">Delivered with your Scroll.</div></div>
+        <div class="card plus"><div class="cname">Plus your activation</div><div class="cdesc">A 15-minute guided rite where you read your Scroll out loud, in your own voice. The link comes in your delivery email.</div></div>
+      </div>
+
+      <h2>How it arrives</h2>
+      <ol class="steps">
+        <li><b>Check out through Whop.</b> One payment of $55. Not a subscription.</li>
+        <li><b>Submit your four coordinates.</b> Right after checkout you get a short private form. Don't know your exact birth time? The form tells you what to enter, and your Scroll still runs.</li>
+        <li><b>Get it by email.</b> Your Scroll arrives in your inbox in 30 minutes or less after you submit your details. You can read it in the email, and download it as a PDF from the link inside. It is not stored inside Whop.</li>
+      </ol>
+      <p class="note">If it doesn't show up: check spam and promotions, confirm the email you submitted, then reply to your confirmation email so the delivery can be traced.</p>
+
+      <h2>The price</h2>
+      <div class="facts">
+        <div><span class="fk">Scroll Scan</span><b>$55</b><span>one time, through Whop</span></div>
+        <div><span class="fk">ScrollKeeper AI</span><b>$88</b><span>a month, separate, not included</span></div>
+      </div>
+
+      <h2>What ScrollKeeper AI adds</h2>
+      <p>The Scroll gave you the X-ray. ScrollKeeper AI is the doctor who reads it daily.</p>
+      <p>It's a daily decode engine calibrated to your Scroll. Type in a dream, a stress trigger, a body signal or a business question, and get a decode with a protocol in 30 seconds.</p>
+      <p>It is a separate subscription through Whop: $88 a month at beta pricing, or $888 a year. You don't need it to use your Scroll. After your scan, you'll be shown how to continue with it if you want daily navigation. <a href="https://viralgrowthmedia.ai/scrollkeeperai">See ScrollKeeper AI</a>.</p>
+
+      <h2>The guarantee and refunds</h2>
+      <p>The Scroll Scan page carries this guarantee, in these words:</p>
+      <blockquote class="g">read your scroll. if it does not name a pattern you recognize as yours, reply to your delivery email within 7 days and the $55 comes back to you. the risk stays with me, not you.</blockquote>
+      <p>Our <a href="https://viralgrowthmedia.ai/terms">Terms of Service</a> say: "All sales are final except where a product page states its own guarantee ... or where the law requires otherwise. Refund requests are reviewed case by case and handled through Whop. If a refund is approved, you request it through Whop's Resolution Center (whop.com/help/customer/requesting-a-refund), and Whop handles the amount, method and timing."</p>
+
+      <h2>Help</h2>
+      <p>Email <a href="mailto:scrollsupport@viralgrowthmedia.ai">scrollsupport@viralgrowthmedia.ai</a> for anything about your purchase, delivery or access.</p>
+      <p class="note">Viral Growth Media LLC, 1908 W Busch Blvd, Suite A, Tampa, Florida 33612.</p>
+
+      <h2>Names people mix up</h2>
+      <ul class="names">
+        <li><b>Scroll Scan</b> is the $55 product on this page.</li>
+        <li><b>Your Scroll</b> is what you receive.</li>
+        <li><b>ScrollKeeper AI</b> is the $88-a-month daily decode subscription.</li>
+        <li><b>Viral Growth Media LLC</b> sells and supports the Scroll Scan.</li>
+        <li><b>Scroll Tech Labs</b> is a separate company Laura founded that builds AI training and evaluation environments for AI labs. It is not the Scroll Scan.</li>
+        <li><b>Not the crypto "Scroll."</b> The Scroll Scan has nothing to do with Scroll, the crypto network, or its SCR token. Scam warnings you may see about "Scroll" crypto are about that network.</li>
+      </ul>
+    </article>
+  </main>
+  <EndCta html={endHtml} />
+  <FaqAccordion faqs={faqs} />
+  <div style="height:90px"></div>
+  <StickyCta />
+</Base>
+<style is:global>
+  .ss-hero{background:#000 radial-gradient(ellipse at 75% 30%,rgba(212,175,55,.22),transparent 60%);color:#fff}
+  .ss-inner{max-width:1100px;margin:0 auto;padding:56px 16px 22px;min-height:240px;display:flex;flex-direction:column;justify-content:flex-end}
+  .ss-hero .box{background:rgba(0,0,0,.62);border:1px solid rgba(212,175,55,.35);padding:20px 20px 18px;max-width:760px}
+  .ss-hero h1{font:700 28px/1.16 'Cinzel',serif;margin:0;color:#fff} .ss-hero h1 em{font-style:normal;color:var(--gold2)}
+  .hook{font:500 24px/1.35 'Cormorant Garamond',serif;font-style:italic;margin:18px 0 14px}
+  .answer{background:#fff;border:1px solid var(--line);border-top:4px solid var(--gold);border-radius:6px;padding:18px 18px 6px;margin:8px 0 26px;box-shadow:0 8px 24px rgba(0,0,0,.05)}
+  .answer .k{font:700 11px/1 'DM Sans';letter-spacing:.2em;text-transform:uppercase;color:#7a5c00;margin-bottom:10px}
+  .answer p{margin:0 0 12px}
+  article.body p{margin:0 0 18px}
+  .cards{display:grid;gap:10px;margin:18px 0 8px}
+  .card{background:#000;color:#f5f0e8;border:1px solid rgba(212,175,55,.4);border-radius:6px;padding:12px 14px}
+  .cbar{display:flex;justify-content:space-between;font:700 11px/1 'DM Sans';letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+  .cbar .on{color:#7fd18b}
+  .cname{font:700 17px/1.25 'Cinzel',serif;color:#fff;margin-bottom:4px}
+  .cdesc{font-size:15px;line-height:1.45;color:#d0c9b8}
+  .card.plus{background:#14110b;border-style:dashed}
+  .steps{padding-left:1.2em;margin:0 0 14px} .steps li{margin:0 0 12px}
+  .note{font-size:16px;color:var(--ink2)}
+  .facts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:8px 0 10px}
+  .facts div{background:#fff;border:1px solid var(--line);border-radius:6px;padding:14px;display:flex;flex-direction:column}
+  .facts .fk{font:700 11px/1.2 'DM Sans';letter-spacing:.16em;text-transform:uppercase;color:#7a5c00}
+  .facts b{font:700 34px/1.1 'Cinzel',serif;margin:6px 0 2px}
+  .facts span:last-child{font-size:14px;color:var(--ink2)}
+  blockquote.g{margin:0 0 18px;padding:14px 16px;background:#fff;border-left:4px solid var(--gold);font:500 21px/1.4 'Cormorant Garamond',serif;font-style:italic}
+  .names{padding-left:1.1em} .names li{margin:0 0 10px}
+  @media (min-width:900px){ .ss-inner{min-height:360px;padding:80px 40px 48px} .ss-hero .box{padding:34px 36px} .ss-hero h1{font-size:48px} .cards{grid-template-columns:1fr 1fr} }
+</style>
