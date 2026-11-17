@@ -7,3 +7,4 @@ DISCOURSE.md
 BRAND.md
 VOICE.md
 .indexnow-key
+__pycache__/
