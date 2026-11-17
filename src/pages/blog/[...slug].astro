@@ -9,6 +9,7 @@ import FaqAccordion from '../../components/FaqAccordion.astro';
 import Related from '../../components/Related.astro';
 import StickyCta from '../../components/StickyCta.astro';
 import { getCollection } from 'astro:content';
+import '../../styles/diagrams.css';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
@@ -34,6 +35,7 @@ const related = all.filter((p) => p.id !== post.id && p.data.cluster === d.clust
 <Base title={d.title} description={d.description}
       article={{ pubDate: d.pubDate.toISOString(), updatedDate: d.updatedDate?.toISOString() }}
       faqs={d.faqs} image={d.heroImage} imageAlt={d.heroAlt}>
+  <script is:inline>document.documentElement.classList.add('dg-js')</script>
   <div class="progress"></div>
   <Hero title={d.title} titleEm={d.titleEm} kicker={d.kicker} minutes={minutes} image={d.heroImage} alt={d.heroAlt} />
   <main class="wrap">
@@ -49,6 +51,28 @@ const related = all.filter((p) => p.id !== post.id && p.data.cluster === d.clust
   <FaqAccordion faqs={d.faqs} />
   <Related posts={related} />
   <StickyCta />
+  <script is:inline>
+  /* Animated diagrams: add .in the first time a .dg scrolls into view (starts its CSS intro),
+     toggle .on so looping layers pause off-screen. Counters (.cnt) hold their final value in
+     the HTML; this only replays the count. See docs/animated-diagrams.md. */
+  (function(){var els=[].slice.call(document.querySelectorAll('.dg'));if(!els.length)return;
+  var rm=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function count(el){var to=parseFloat(el.getAttribute('data-to'));if(isNaN(to))return;
+   var pre=el.getAttribute('data-pre')||'',suf=el.getAttribute('data-suf')||'',ms=+el.getAttribute('data-ms')||1500,
+   d=parseFloat(getComputedStyle(el).getPropertyValue('--d'))*1000||0,dec=(String(to).split('.')[1]||'').length,t0=null,
+   fmt=function(v){return pre+v.toFixed(dec).replace(/\B(?=(\d{3})+(?!\d))/g,',')+suf;};
+   el.textContent=fmt(0);
+   function f(t){if(t0===null)t0=t+d;var p=Math.max(0,Math.min(1,(t-t0)/ms));p=1-Math.pow(1-p,3);
+    el.textContent=fmt(to*p);if(p<1)requestAnimationFrame(f);else el.textContent=fmt(to);}
+   requestAnimationFrame(f);}
+  function show(e){if(e.classList.contains('in'))return;e.classList.add('in');
+   if(!rm)[].forEach.call(e.querySelectorAll('.cnt'),count);}
+  if(!('IntersectionObserver' in window)){els.forEach(function(e){show(e);e.classList.add('on')});return;}
+  var io=new IntersectionObserver(function(es){es.forEach(function(x){
+   if(x.isIntersecting){show(x.target);x.target.classList.add('on');}else x.target.classList.remove('on');});},{threshold:.35});
+  els.forEach(function(e){io.observe(e)});
+  addEventListener('beforeprint',function(){els.forEach(show)});})();
+  </script>
 </Base>
 <style is:global>
   article.body p{margin:0 0 18px}
